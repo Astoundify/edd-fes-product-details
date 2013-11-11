@@ -83,9 +83,6 @@ class Astoundify_EDD_FPD {
 	}
 	
 	public function product_details( $tpl, $input_name, $id, $values ){
-		if ( 'no' == $values[ 'is_meta' ] )
-			return;
-
 		$field_name  = sprintf( $tpl, $input_name, $id, 'product_detail' );
 		$field_value = $values && isset( $values[ 'product_detail' ]) ? esc_attr( $values[ 'product_detail' ] ) : '';
 		?>

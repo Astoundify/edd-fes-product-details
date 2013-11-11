@@ -10,6 +10,8 @@
 
 class EDD_FPD_Widget extends WP_Widget {
 
+	var $multi_sep;
+
 	/**
 	 * Constructor.
 	 *
@@ -22,6 +24,8 @@ class EDD_FPD_Widget extends WP_Widget {
 			'classname'   => 'widget_edd_fpd',
 			'description' => __( 'Use this widget to display specified product details.', 'edd-fpd' ),
 		) );
+
+		$this->multi_sep = apply_filters( 'edd_fpd_multi_sep', ', ' );
 
 		add_action( 'save_post',    array( $this, 'flush_widget_cache' ) );
 		add_action( 'deleted_post', array( $this, 'flush_widget_cache' ) );
@@ -86,12 +90,14 @@ class EDD_FPD_Widget extends WP_Widget {
 	}
 
 	public function get_product_details() {
+		global $post;
+
 		$form_id = EDD_FES()->fes_options->get_option( 'fes-submission-form' );
 		$fields  = get_post_meta( $form_id, 'fes-form', true );
 		$meta    = array();
 
 		foreach ( $fields as $field ) {
-			if ( ! isset( $field[ 'product_detail' ] ) || 'no' == $field[ 'is_meta' ] )
+			if ( ! isset( $field[ 'product_detail' ] ) )
 				continue;
 
 			switch ( $field[ 'input_type' ] ) {
@@ -116,22 +122,43 @@ class EDD_FPD_Widget extends WP_Widget {
 					break;
 
 				case 'checkbox' :
+				case 'multiselect' :
 
 					$value = get_post_meta( $post->ID, $field[ 'name' ], true );
 					$value = explode( '|', $value );
 					$value = array_map( 'trim', $value );
-					$value = implode( ', ', $value );
+					$value = implode( $this->multi_sep, $value );
 
-					$meta[ $field[ 'label' ] ] = $value;
+					break;
+
+				case 'taxonomy' :
+
+					$value = wp_get_post_terms( $post->ID, $field[ 'name' ] );
+					$terms = array();
+
+					foreach ( $value as $term ) {
+						$terms[] = '<a href="' . get_term_link( $term, $field[ 'name' ] ) . '">' . $term->name . '</a>';
+					}
+
+					$value = implode( $this->multi_sep, $terms );
 
 					break;
 
 				default :
 
-					$meta[ $field[ 'label' ] ] = get_post_meta( $post->ID, $field[ 'name' ], true );
+					if ( 'no' != $field[ 'is_meta' ] ) {
+						$value = get_post_meta( $post->ID, $field[ 'name' ], true );
+					} else {
+						$value = get_post_field( $field[ 'name' ], $post->ID );
+					}
 
 					break;
 			}
+
+			$label = apply_filters( 'edd_fpd_label', $field[ 'label' ], $field );
+			$value = apply_filters( 'edd_fpd_value', $value, $field );
+
+			$meta[ $label ] = $value;
 			
 		}
 

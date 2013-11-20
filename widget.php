@@ -51,12 +51,6 @@ class EDD_FPD_Widget extends WP_Widget {
 		}
 
 		$content = get_transient( $this->id );
-
-		/*if ( false !== $content ) {
-			echo $content;
-			return;
-		}*/
-
 		$meta    = $this->get_product_details();
 
 		if ( empty( $meta ) )

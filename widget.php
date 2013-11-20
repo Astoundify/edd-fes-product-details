@@ -20,7 +20,7 @@ class EDD_FPD_Widget extends WP_Widget {
 	 * @return Twenty_Fourteen_Ephemera_Widget
 	 */
 	public function __construct() {
-		parent::__construct( 'widget_edd_fpd', __( 'EDD Frontend Product Details', 'edd-fpd' ), array(
+		parent::__construct( 'widget_edd_fpd', __( 'Easy Digital Downloads - Frontend Product Details', 'edd-fpd' ), array(
 			'classname'   => 'widget_edd_fpd',
 			'description' => __( 'Use this widget to display specified product details.', 'edd-fpd' ),
 		) );

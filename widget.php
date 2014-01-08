@@ -59,7 +59,7 @@ class EDD_FPD_Widget extends WP_Widget {
 		ob_start();
 		extract( $args, EXTR_SKIP );
 
-		$title  = apply_filters( 'widget_title', empty( $instance[ 'title' ] ) ? '' : $instance[ 'title' ] );		
+		$title  = apply_filters( 'widget_title', empty( $instance[ 'title' ] ) ? '' : $instance[ 'title' ] );
 		echo $before_widget;
 
 		if ( '' != $title )
@@ -89,6 +89,9 @@ class EDD_FPD_Widget extends WP_Widget {
 		$form_id = EDD_FES()->fes_options->get_option( 'fes-submission-form' );
 		$fields  = get_post_meta( $form_id, 'fes-form', true );
 		$meta    = array();
+
+		if ( ! $fields )
+			return;
 
 		foreach ( $fields as $field ) {
 			if ( ! isset( $field[ 'product_detail' ] ) )
@@ -153,7 +156,7 @@ class EDD_FPD_Widget extends WP_Widget {
 			$value = apply_filters( 'edd_fpd_value', $value, $field );
 
 			$meta[ $label ] = $value;
-			
+
 		}
 
 		return $meta;

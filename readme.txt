@@ -11,22 +11,22 @@ Stable Tag: 1.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Specify and display frontend submission data as "product details"
+Specify and display frontend submission data as "product details" in a widget.
 
 == Description ==
 
-Specify and display frontend submission data as "product details"
+Specify and display frontend submission data as "product details" in a widget.
 
 == Installation ==
 
 1. Install and Activate.
 2. In "FES > FES Forms > Submission Form" check the fields you want to be considered product details.
-3. Add the Easy Digital Downloads - Frontend Product Details widget to a widget area.
+3. Add the "Easy Digital Downloads - Frontend Product Details" widget to a widget area.
 
 == Frequently Asked Questions ==
 
 == Changelog ==
 
-= 1.0: November 20, 2013 =
+= 1.0: January 8, 2014 =
 
 * First official release!

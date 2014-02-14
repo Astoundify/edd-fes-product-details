@@ -64,11 +64,10 @@ class EDD_FPD_Widget extends WP_Widget {
 
 		if ( '' != $title )
 			echo $before_title . $title . $after_title;
-
 		?>
 
 		<table class="edd-fpd">
-			<?php foreach ( $meta as $label => $value ) : ?>
+			<?php foreach ( $meta as $label => $value ) : if ( '' == $value ) continue; ?>
 			<tr>
 				<th><?php echo $label; ?></th>
 				<td><?php echo $value; ?></td>
@@ -154,6 +153,9 @@ class EDD_FPD_Widget extends WP_Widget {
 
 			$label = apply_filters( 'edd_fpd_label', $field[ 'label' ], $field );
 			$value = apply_filters( 'edd_fpd_value', $value, $field );
+
+			if ( '' == $value )
+				continue;
 
 			$meta[ $label ] = $value;
 

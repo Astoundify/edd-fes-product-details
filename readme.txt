@@ -5,8 +5,8 @@ Plugin URI: http://wordpress.org/plugins/edd-fes-product-details
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=contact@appthemer.com&item_name=Donation+for+EDD+FES+Product+Details
 Contributors: SpencerFinnell
 Tags: easy digital downloads, downloads, product details, widget
-Requires at least: 3.5
-Tested up to: 3.8
+Requires at least: 3.9
+Tested up to: 3.9
 Stable Tag: 1.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html

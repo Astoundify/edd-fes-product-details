@@ -57,10 +57,10 @@ class Astoundify_EDD_FPD {
 	 */
 	private function setup_globals() {
 		$this->file         = __FILE__;
-		
+
 		$this->basename     = plugin_basename( $this->file );
 		$this->plugin_dir   = plugin_dir_path( $this->file );
-		$this->plugin_url   = plugin_dir_url ( $this->file ); 
+		$this->plugin_url   = plugin_dir_url ( $this->file );
 	}
 
 	/**
@@ -72,7 +72,7 @@ class Astoundify_EDD_FPD {
 	 * @return void
 	 */
 	private function setup_actions() {
-		add_action( 'edd_fes_add_field_to_common_form_element', array( $this, 'product_details' ), 100, 4 );
+		add_action( 'fes_add_field_to_common_form_element', array( $this, 'product_details' ), 100, 4 );
 		add_action( 'widgets_init', array( $this, 'widgets_init' ) );
 	}
 
@@ -81,14 +81,14 @@ class Astoundify_EDD_FPD {
 
 		register_widget( 'EDD_FPD_Widget' );
 	}
-	
+
 	public function product_details( $tpl, $input_name, $id, $values ){
 		$field_name  = sprintf( $tpl, $input_name, $id, 'product_detail' );
 		$field_value = $values && isset( $values[ 'product_detail' ]) ? esc_attr( $values[ 'product_detail' ] ) : '';
 		?>
 			<div class="fes-form-rows">
 				<label><?php _e( 'Product Detail', 'edd-fpd' ); ?></label>
-				
+
 				<div class="fes-form-sub-fields">
 					<label for="<?php esc_attr_e( $field_name ); ?>">
 						<input type="checkbox" data-type="label" id="<?php echo esc_attr( $field_name ); ?>" name="<?php echo esc_attr( $field_name ); ?>" value="1" class="smallipopInput" <?php checked( $field_value, 1 ); ?>>
@@ -98,6 +98,6 @@ class Astoundify_EDD_FPD {
 			</div><!-- .fes-form-rows -->
 		<?php
 	}
-	
+
 }
-add_action( 'plugins_loaded', array( 'Astoundify_EDD_FPD', 'instance' ) ); 
+add_action( 'plugins_loaded', array( 'Astoundify_EDD_FPD', 'instance' ) );

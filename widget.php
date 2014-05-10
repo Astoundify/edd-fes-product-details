@@ -109,7 +109,8 @@ class EDD_FPD_Widget extends WP_Widget {
 					$value = get_post_meta( $post->ID, $field[ 'name' ] );
 
 					foreach ( $value as $attachment_id ) {
-						if ( 'image_upload' == $attr[ 'input_type' ] ) {
+
+						if ( 'image_upload' == $field[ 'input_type' ] ) {
 							$thumb = wp_get_attachment_image( $attachment_id, 'thumbnail' );
 						} else {
 							$thumb = get_post_field( 'post_title', $attachment_id );
@@ -127,9 +128,13 @@ class EDD_FPD_Widget extends WP_Widget {
 				case 'multiselect' :
 
 					$value = get_post_meta( $post->ID, $field[ 'name' ], true );
-					$value = explode( '|', $value );
-					$value = array_map( 'trim', $value );
-					$value = implode( $this->multi_sep, $value );
+
+					if ( ! is_array( $value ) ) {
+						$value = '';
+					} else {
+						$value = array_map( 'trim', $value );
+						$value = implode( $this->multi_sep, $value );
+					}
 
 					break;
 

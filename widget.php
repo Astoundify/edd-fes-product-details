@@ -85,12 +85,18 @@ class EDD_FPD_Widget extends WP_Widget {
 	public function get_product_details() {
 		global $post;
 
-		$form_id = EDD_FES()->fes_options->get_option( 'fes-submission-form' );
+		$form_id = EDD_FES()->helper->get_option( 'fes-submission-form' );
+
+		if ( ! $form_id ) {
+			return;
+		}
+
 		$fields  = get_post_meta( $form_id, 'fes-form', true );
 		$meta    = array();
 
-		if ( ! $fields )
+		if ( ! $fields ) {
 			return;
+		}
 
 		foreach ( $fields as $field ) {
 			if ( ! isset( $field[ 'product_detail' ] ) )
@@ -154,7 +160,7 @@ class EDD_FPD_Widget extends WP_Widget {
 			$label = apply_filters( 'edd_fpd_label', $field[ 'label' ], $field );
 			$value = apply_filters( 'edd_fpd_value', $value, $field );
 
-			if ( '' == $value )
+			if ( empty( $value ) )
 				continue;
 
 			$meta[ $label ] = $value;

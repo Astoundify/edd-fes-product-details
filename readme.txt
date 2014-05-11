@@ -7,7 +7,7 @@ Contributors: SpencerFinnell
 Tags: easy digital downloads, downloads, product details, widget
 Requires at least: 3.9
 Tested up to: 3.9
-Stable Tag: 1.0
+Stable Tag: 1.0.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -26,6 +26,10 @@ Specify and display frontend submission data as "product details" in a widget.
 == Frequently Asked Questions ==
 
 == Changelog ==
+
+= 1.0.1: May 11, 2014 =
+
+* Fix: FES 2.2 compatibility.
 
 = 1.0: January 8, 2014 =
 

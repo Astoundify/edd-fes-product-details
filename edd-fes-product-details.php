@@ -5,7 +5,7 @@
  * Description: Mark information collected during frontend submissions as "product details" to be displayed elsewhere.
  * Author:      Astoundify
  * Author URI:  http://astoundify.com
- * Version:     1.0
+ * Version:     1.0.1
  */
 
 // Exit if accessed directly

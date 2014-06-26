@@ -109,6 +109,12 @@ class EDD_FPD_Widget extends WP_Widget {
 			$value = get_post_meta( $post->ID, $field[ 'name' ], true );
 
 			switch ( $field[ 'input_type' ] ) {
+				case 'image_upload' :
+					if ( 'featured_image' == $field[ 'template' ] ) {
+						$value = get_the_post_thumbnail( $post->ID, 'thumbnail' );
+					}
+				break;
+
 				case 'file_upload' :
 					$uploads = array();
 
@@ -128,6 +134,32 @@ class EDD_FPD_Widget extends WP_Widget {
 					}
 
 					$value = implode( $this->multi_sep, $value );
+				break;
+
+				case 'taxonomy' :
+					$terms = wp_get_post_terms( $post->ID, $field[ 'name' ] );
+
+					if ( ! is_wp_error( $terms ) ) {
+						switch ( $field[ 'type' ] ) {
+
+							case 'checkbox' :
+							case 'multiselect' :
+							case 'text' :
+								$_terms = array();
+
+								foreach ( $terms as $term ) {
+									$_terms[] = sprintf( '<a href="%s">%s</a>', get_term_link( $term, $field[ 'name' ] ), $term->name );
+								}
+
+								$value = implode( $this->multi_sep, $_terms );
+							break;
+
+							case 'select' :
+								$value = sprintf( '<a href="%s">%s</a>', get_term_link( current( $terms ), $field[ 'name' ] ), current( $terms )->name );
+							break;
+
+						}
+					}
 				break;
 
 				default :

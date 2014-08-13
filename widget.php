@@ -118,11 +118,15 @@ class EDD_FPD_Widget extends WP_Widget {
 				case 'file_upload' :
 					$uploads = array();
 
-					foreach ( $value as $attachment_id ) {
-						$uploads[] = wp_get_attachment_link( $attachment_id, 'thumbnail', false, true );
-					}
+					$value = '';
 
-					$value = implode( '<br />', $uploads );
+					if ( is_array( $value ) ) {
+						foreach ( $value as $attachment_id ) {
+							$uploads[] = wp_get_attachment_link( $attachment_id, 'thumbnail', false, true );
+						}
+
+						$value = implode( '<br />', $uploads );
+					}
 				break;
 
 				case 'checkbox' :

@@ -175,6 +175,8 @@ class EDD_FPD_Widget extends WP_Widget {
 				break;
 			}
 
+			$value = make_clickable( $value );
+
 			$label = apply_filters( 'edd_fpd_label', $field[ 'label' ], $field );
 			$value = apply_filters( 'edd_fpd_value', $value, $field );
 

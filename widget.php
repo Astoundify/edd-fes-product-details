@@ -143,7 +143,7 @@ class EDD_FPD_Widget extends WP_Widget {
 				case 'taxonomy' :
 					$terms = wp_get_post_terms( $post->ID, $field[ 'name' ] );
 
-					if ( ! is_wp_error( $terms ) ) {
+					if ( ! is_wp_error( $terms ) && ! empty( $terms ) ) {
 						switch ( $field[ 'type' ] ) {
 
 							case 'checkbox' :

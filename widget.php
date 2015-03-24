@@ -166,7 +166,7 @@ class EDD_FPD_Widget extends WP_Widget {
 					}
 				break;
 				
-				case: 'url' :
+				case 'url' :
 					$value = make_clickable( get_post_field( $field[ 'name' ], $post->ID ) );	
 				break;
 

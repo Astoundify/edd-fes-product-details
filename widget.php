@@ -113,6 +113,57 @@ class EDD_FPD_Widget extends WP_Widget {
 					if ( 'featured_image' == $field[ 'template' ] ) {
 						$value = get_the_post_thumbnail( $post->ID, 'thumbnail' );
 					}
+
+					// Image is pulled from featured. See http://codex.wordpress.org/Function_Reference/wp_get_attachment_image_metadata
+					$image = wp_get_attachment_metadata(get_post_thumbnail_id( $post->ID ), 'single-post-thumbnail');
+					$width = $image[width];
+					$height = $image[height];
+
+					//Add dimensions to the table widget
+					$meta['dimensions'] = $height . " x " . $width . "px </br>" . $height/300 . '" x ' . $width/300 . '" @300dpi';
+
+					//Get exif data
+					$exif_meta = $image[image_meta];
+
+					//If copyright is blank, use website name
+					if ($exif_meta[copyright] == "")
+						$copyright = "&copy; " . date("Y") . " " . get_bloginfo('name');
+					else
+						$copyright = "&copy;" . $exif_meta[copyright];
+
+					//If credit is blank, set to unknown
+					if ($exif_meta[credit] == "")
+						$credit = "Unknown";
+					else
+						$credit = $exif_meta[credit];
+
+					//Set date of image creation
+					$exif_epoch = new DateTime("@$exif_meta[created_timestamp]");
+					$exif_date = $exif_epoch->format('Y-m-d');
+
+					// Convert the shutter speed to a fraction
+					if ($exif_meta['shutter_speed'] != 0 && (1 / $exif_meta['shutter_speed']) > 1) {
+						if ((number_format((1 / $exif_meta['shutter_speed']), 1)) == 1.3
+						or number_format((1 / $exif_meta['shutter_speed']), 1) == 1.5
+						or number_format((1 / $exif_meta['shutter_speed']), 1) == 1.6
+						or number_format((1 / $exif_meta['shutter_speed']), 1) == 2.5) {
+							$photoShutterSpeed = "1/" . number_format((1 / $exif_meta['shutter_speed']), 1, '.', '') . " sec";
+						} else {
+							$photoShutterSpeed = "1/" . number_format((1 / $exif_meta['shutter_speed']), 0, '.', '') . " sec";
+						}
+					} else {
+						$photoShutterSpeed = $exif_meta['shutter_speed'] . " secs";
+					}
+
+					$camera = "Camera: " . $exif_meta[camera] . "<br>";
+					$aperture = "Aperture: f/" . $exif_meta[aperture] . "<br>";
+					$focal_length = "Focal Length: " . $exif_meta[focal_length] . "<br>";
+					$shutter_speed = "Shutter Speed: " . $photoShutterSpeed . "<br>";
+					$iso = "ISO: " . $exif_meta[iso] . "<br>";
+					$credit = "Credit: " . $credit . "<br>";
+					$date = "Date: " . $exif_date . "<br>";
+					$copyright = "Copyright: " . $copyright . "<br>";
+					$meta['image details'] = $camera . $aperture . $focal_length . $shutter_speed . $iso . $credit . $date . $copyright;
 				break;
 
 				case 'file_upload' :
@@ -190,7 +241,7 @@ class EDD_FPD_Widget extends WP_Widget {
 			$meta[ $label ] = $value;
 
 		}
-
+		
 		return $meta;
 	}
 
